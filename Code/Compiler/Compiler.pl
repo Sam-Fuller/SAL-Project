@@ -1,7 +1,6 @@
 :- ['LexicalParser.pl','SyntaxParser.pl','JSGenerator.pl'].
 
 compile(InFileName, OutFileName) :-
-
    %lexical analysis, read in lexemes from file
    open(InFileName, 'read', InFile),
    lexical_parser(InFile, Lexemes),
