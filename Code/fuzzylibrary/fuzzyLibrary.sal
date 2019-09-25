@@ -1,0 +1,10 @@
+"fuzzyInMF.sal"; "fuzzyOutMF.sal";
+
+/**Returns the average membership of a single rule*/
+fuzzyTotalMembership(rule, input) <- :+mapfuzzyInputs(rule[0], input)/ #input;
+
+/**Returns the */
+fuzzyAssessAllRules(rule, input) <- fuzzyOutputs(rule[1], fuzzyTotalMembership(rule, input));
+
+/**Assesses an input with the given rules, fuzzyInputs and fuzzyOutputs must be declared*/
+fuzzyAssessInput(rules, input) <- :+mapfuzzyAssessAllRules(rules, input) / :+mapfuzzyTotalMembership(rules, input);

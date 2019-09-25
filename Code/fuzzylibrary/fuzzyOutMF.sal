@@ -1,0 +1,33 @@
+/**a fuzzy triangular membership function
+*fuzzyInMFTriangular(leftFoot, shoulder, rightFoot, membership)*/
+/*case: membership is 0*/
+fuzzyOutMFTriangular(leftFoot, shoulder, rightFoot, 0) <- null;
+
+/*case: mebership is 1*/
+fuzzyOutMFTriangular(leftFoot, shoulder, rightFoot, 1) <- shoulder;
+
+/*general case*/
+fuzzyOutMFTriangular(leftFoot, shoulder, rightFoot, membership)
+    <- (((membership * (shoulder - leftFoot) + leftFoot) 
+    + (1 - membership) * (rightFoot - shoulder) + shoulder)/2)
+    *membership;
+
+
+/**a fuzzy trapezoidal membership function
+*fuzzyOutMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, membership)*/
+/*case: membership is 0*/
+fuzzyOutMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, 0) <- null;
+
+/*case: mebership is 1*/
+fuzzyOutMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, 1) <- (leftShoulder + rightShoulder)/2;
+
+/*general case*/
+fuzzyOutMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, membership)
+    <- (((membership * (leftShoulder - leftFoot) + leftFoot) 
+    + (1 - membership) * (rightFoot - rightShoulder) + rightShoulder)/2)
+    *membership;
+
+
+/**a fuzzy gaussian membership function 
+*fuzzyOutMFGaussian(center, deviation, membership)*/
+fuzzyOutMFGaussian(center, deviation, membership) <- center * membership;

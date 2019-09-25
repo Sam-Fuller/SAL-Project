@@ -1,0 +1,7 @@
+/**fibonacci sequence is declared recursively*/
+/*declaring known fib numbers*/
+fib(0) <- 0;
+fib(1) <- 1;
+
+/*declaring unknown fib numbers recursively*/
+fib(x) = fib(x-1) + fib(x-2);

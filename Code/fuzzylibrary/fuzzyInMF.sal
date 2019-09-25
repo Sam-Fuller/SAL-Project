@@ -1,0 +1,40 @@
+/**a fuzzy triangular membership function
+*fuzzyInMFTriangular(leftFoot, shoulder, rightFoot, input)*/
+/*case: input is left of the left foot*/
+fuzzyInMFTriangular(leftFoot, shoulder, rightFoot, input<=leftFoot) <- 0;
+
+/*case: input is between the left foot and the shoulder*/
+fuzzyInMFTriangular(leftFoot, shoulder, rightFoot, input>leftFoot && input<=shoulder)
+    <- (input - leftFoot) / (shoulder - leftFoot);
+
+/*case: input is between the shoulder and the right foot*/
+fuzzyInMFTriangular(leftFoot, shoulder, rightFoot, input>shoulder && input<rightFoot)
+    <- 1 - (input - shoulder) / (rightFoot - shoulder);
+
+/*case: input is right of the right foot*/
+fuzzyInMFTriangular(leftFoot, shoulder, rightFoot, input>=rightFoot) <- 0;
+
+
+/**a trapezoidal membershi function
+*fuzzyTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, input)*/
+/*case: input is left of the left foot*/
+fuzzyInMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, input<=leftFoot) <- 0;
+
+/*case: input is between the left foot and the right shoulder*/
+fuzzyInMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, input>leftFoot && input<=leftShoulder)
+    <- (input - leftFoot) / (leftShoulder - leftFoot);
+
+/*case: input is between the two shoulders*/
+fuzzyInMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, input>leftShoulder && input<rightShoulder)
+    <- 1;
+
+/*case: input is between the left shoulder and the right foot*/
+fuzzyInMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, input>=rightShoulder && input<rightFoot)
+    <- 1 - (input - rightShoulder) / (rightFoot - rightShoulder);
+
+fuzzyInMFTrapezoidal(leftFoot, leftShoulder, rightShoulder, rightFoot, input>=rightFoot) <- 0;
+
+
+/**a fuzzy gaussian membership function
+*fuzzyGaussian(center, deviation, input)*/
+fuzzyInMFGaussian(center, deviation, input) <- Math.E**(-0.5*((input - center)/deviation)**2);

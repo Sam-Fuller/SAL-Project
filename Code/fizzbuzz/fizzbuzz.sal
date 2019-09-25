@@ -1,0 +1,18 @@
+/**defining fizz recursively*/
+fizz(x<3) <- "";
+fizz(3) <- "fizz";
+fizz(x) <- fizz(x-3);
+
+/**defining buzz recursively*/
+buzz(x<5) <- "";
+buzz(5) <- "buzz";
+buzz(x) <- buzz(x-5);
+
+/**the output is the concatenation of both fizz and buzz*/
+stringout(x) = fizz(x)+buzz(x);
+
+/**if the cardinality of out for x is 0, return x, else return the concatenation of out*/
+singleout(x|stringout(x) == "") = x;
+singleout(x) = stringout(x);
+
+fizzbuzz(x>0) <- mapsingleout([0..x]);
