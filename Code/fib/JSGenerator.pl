@@ -5,13 +5,12 @@ code_generator([],_,_).
 
 code_generator([fun(Name,Function)|Syntax], FunctionNames, File):-
     !,
-
     write('Compiling '),
 
     %element list
     write(File, 'const '),write_name(File, Name),write(File, 'elements = ['),nl(File),
     code_generator_element(Function, FunctionNames, File, Documentation),write(File, '];'),nl(File),nl(File),
-
+    
     %cache
     write(File, 'var '),code_generator_list(File, Name),write(File, 'cache = [];'),nl(File),nl(File),
 
@@ -25,7 +24,7 @@ code_generator([fun(Name,Function)|Syntax], FunctionNames, File):-
     %map function
     write(File, 'function map'),code_generator_list(File, Name),write(File, '(variables){'),nl(File),
     write(File, '   return variables.shift().map(variable => {'),nl(File),
-    write(File, '      var currentVariables = variables.slice(0, variables.length);'),nl(File),
+    write(File, '      var currentVariables = variables;'),nl(File),
     write(File, '      currentVariables.unshift(variable);'),nl(File),
     write(File, '      return '),code_generator_list(File, Name),write(File, '(currentVariables);'),nl(File),
     write(File, '   }).filter(x => x != null);'),nl(File),
@@ -77,44 +76,13 @@ code_generator_element([ele(Caching, Inputs, Output)|Function], FunctionNames, F
     write(File, ',   (vars)=>{return '),
     %write inputs to file
     code_generator_input(File, Inputs),
-    write(File, '},   (vars)=>{'),
-    code_generator_statement(Output, Rest, File),
-    write(File, 'return '),
+    write(File, '},   (vars)=>{return '),
     %write outputs to file
-    code_generator_output(File, Rest),
+    code_generator_output(File, Output),
     write(File, '}],'),
     nl(File),
     code_generator_element(Function, FunctionNames, File, Documentation).
 
-%save variables to file
-code_generator_statement(Statement, Output, File):-
-    split(Statement, Output, Variables),
-    !,
-    code_generator_variables(Variables, File).
-
-code_generator_statement(Output, Output, File):-
-    !.
-
-code_generator_variables(Variables, File):-
-    split(Variables, Current, Rest),
-    !,
-    write(File, 'var '),
-    code_generator_output(File, Current),
-    write(File, '; '),
-    code_generator_variables(Rest, File).
-
-code_generator_variables(Final, File):-
-    !,
-    write(File, 'var '),
-    code_generator_output(File, Final),
-    write(File, '; ').
-
-split([op(['|'])|All], [], All):-
-    !.
-
-split([Current|All], [Current|Before], After):-
-    !,
-    split(All, Before, After).
 
 %code_generator_list(File, Name)
 %write name to file
@@ -205,11 +173,6 @@ code_generator_lexeme(File, str(String)):-
 %writes function names to file
 code_generator_lexeme(File, name(Name)):-
     code_generator_list(File, Name).
-
-%writes . operator to file
-code_generator_lexeme(File, op(['='])):-
-    !,
-    write(File, '=').
 
 %writes . operator to file
 code_generator_lexeme(File, op(['.'])):-

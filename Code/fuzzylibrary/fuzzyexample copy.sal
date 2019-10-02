@@ -1,0 +1,24 @@
+"fuzzyLibrary.sal";
+
+/**the only input of the system is temperature */
+fuzzyInputs("any", inputs) <- null;
+fuzzyInputs("temp-cold", inputs) <- fuzzyInMFTriangular(0,5,30,inputs[0]);
+fuzzyInputs("temp-warm", inputs) <- fuzzyInMFGaussian(40,20,inputs[0]);
+fuzzyInputs("temp-hot", inputs) <- fuzzyInMFTrapezoidal(50,85,95,100,inputs[0]);
+
+/**the output of the system is time */
+fuzzyOutputs("any", membership) <- null;
+fuzzyOutputs("time-short", membership) <- fuzzyOutMFTriangular(0,5,10,membership);
+fuzzyOutputs("time-long", membership) <- fuzzyOutMFTrapezoidal(5,30,35,40,membership);
+
+
+rule1 <- [["temp-cold"], "time-short"];
+rule2 <- [["temp-warm"], "time-short"];
+rule3 <- [["temp-warm"], "time-long"];
+rule4 <- [["temp-hot"], "time-long"];
+
+/**define the rule list as the concatenation of each rule*/
+ruleList <- [rule1, rule2, rule3, rule4];
+
+/**calculate the output through the fuzzy system */
+fuzzyExample(input) <- fuzzyAssessInput(ruleList, input);

@@ -1,0 +1,21 @@
+arrayConstructor <- [1..10];
+
+arrayLength <- #arrayConstructor;
+
+concat2Array <- arrayConstructor:arrayConstructor;
+
+concat1Array <- ::arrayConstructor;
+
+addArray <- :+arrayConstructor;
+
+prodArray <- :*arrayConstructor;
+
+noPred(x) <- x>10;
+somePred(x) <- x>5;
+allPred(x) <- x>0;
+
+allArrayFalse <- :&mapsomePred(arrayConstructor);
+allArrayTrue <- :&mapallPred(arrayConstructor);
+
+anyArrayFalse <- :|mapnoPred(arrayConstructor);
+anyArrayTrue <- :|mapsomePred(arrayConstructor);

@@ -200,7 +200,7 @@ tokenise_string(string,_,Stream,Rest,NewType,NewChar) :-
 
 %tokenise_string_end(+Type, +Char, +Stream, +String, +NewType, +NewChar)
 %if there is an \ operator, add next char without processing, continue recursion
-tokenise_string_end(operator,'\\',Stream,['\\'|[Char2|Rest]],NewType,NewChar) :-
+tokenise_string_end(operator,'\\',Stream,[Char|[Char2|Rest]],NewType,NewChar) :-
    !,
    get_char_and_type(Stream,Char2,Type2),
    get_char_and_type(Stream,Char3,Type3),
